@@ -16,7 +16,7 @@ class Tasks
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Users $user = null;
+    private ?User $user = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $title = null;
@@ -38,12 +38,12 @@ class Tasks
         return $this->id;
     }
 
-    public function getUser(): ?Users
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?Users $user): self
+    public function setUser(?User $user): self
     {
         $this->user = $user;
 

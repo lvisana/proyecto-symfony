@@ -5,7 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\Task;
+use App\Entity\Tasks;
 use App\Repository\TasksRepository;
 
 class TaskController extends AbstractController
