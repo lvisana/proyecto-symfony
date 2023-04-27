@@ -46,13 +46,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTime $created_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Tasks::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Tasks::class)]
     private Collection $tasks;
 
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
     }
+    
 
     public function getId(): ?int
     {
@@ -114,7 +115,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->id;
     }
 
     /**

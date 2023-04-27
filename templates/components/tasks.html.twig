@@ -1,0 +1,19 @@
+{% for task in tasks %}
+    <tr>
+        <td> {{task.title}} </td>
+        <td> {{task.priority}} </td>
+        <td> {{task.hours}} </td>
+        <td class="buttons"> 
+
+            <a href="{{path('single_task', {id: task.id})}}" class="btn btn-show">Ver</a>
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') and app.user.id == task.user.id %}
+            
+                <a href="{{path('create_task', {'edit': task.id})}}" class="btn btn-edit">Editar</a>
+                <a href="{{path('delete_task', {'id': task.id})}}" class="btn btn-delete">Borrar</a>
+
+            {% endif %}
+
+        </td>
+    </tr>
+{% endfor %}

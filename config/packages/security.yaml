@@ -8,7 +8,6 @@ security:
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        in_memory: { memory: ~ }
         app_user_provider:
             entity:
                 class: App\Entity\User
@@ -26,7 +25,9 @@ security:
 
             logout:
                 path: /logout
-                target: /
+                target: /login
+
+    # access_denied_url: /
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -37,8 +38,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/task, roles: ROLE_USER }
+        - { path: ^/*$, roles: ROLE_USER }
+        - { path: ^/login$, allow_if: "!is_fully_authenticated()" }
+        - { path: ^/register, allow_if: "!is_fully_authenticated()" }
 
 when@test:
     security:

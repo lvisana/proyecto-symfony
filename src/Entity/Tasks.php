@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TasksRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TasksRepository::class)]
 class Tasks
@@ -14,24 +15,31 @@ class Tasks
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tasks')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tasks')]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?User $user = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank]
     private ?string $content = null;
 
     #[ORM\Column(length: 255, nullable: false)]
+    #[Assert\NotBlank]
+    #[Assert\Choice(['high', 'medium', 'low'])]
     private ?string $priority = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\NotBlank]
+    #[Assert\Regex('/^[0-9]*$/')]
+    
     private ?int $hours = null;
 
     #[ORM\Column(nullable: true)]
-    private ?\DateTimeImmutable $created_at = null;
+    private ?\DateTime $created_at = null;
 
     public function getId(): ?int
     {
@@ -98,12 +106,12 @@ class Tasks
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(?\DateTimeImmutable $created_at): self
+    public function setCreatedAt(?\DateTime $created_at): self
     {
         $this->created_at = $created_at;
 

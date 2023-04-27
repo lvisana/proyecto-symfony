@@ -2,10 +2,6 @@ controllers:
     resource: ../src/Controller/
     type: attribute
 
-tasks:
-    path: /tasks
-    controller: App\Controller\TaskController::index
-
 register:
     path: /register
     controller: App\Controller\UserController::register
@@ -18,3 +14,28 @@ logout:
     path: /logout
     controller: App\Controller\LoginController::logout
 
+home:
+    path: /
+    controller: App\Controller\TaskController::index
+
+user_tasks:
+    path: /task/my-tasks
+    controller: App\Controller\TaskController::userTasks
+
+single_task:
+    path: /task/single/{id}
+    controller: App\Controller\TaskController::task
+    requirements: 
+        id: '[0-9]+'
+        
+create_task:
+    path: /task/create/{edit?}
+    controller: App\Controller\TaskController::create
+        
+delete_task:
+    path: /task/delete/{id?}
+    controller: App\Controller\TaskController::delete
+        
+profile:
+    path: /profile
+    controller: App\Controller\TaskController::profile

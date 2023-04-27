@@ -1,10 +1,22 @@
 <header id="header">
     <h2>Tareas Symfony</h2>
     <ul id="menu">
-        <li><a href="{{path('tasks')}}">Inicio</a></li>
-        <li><a href="">Mis tareas</a></li>
-        <li><a href="{{path('login')}}">Login</a></li>
-        <li><a href="{{path('register')}}">Registrarse</a></li>
+
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
+            <li><a href="{{path('home')}}">Inicio</a></li>
+            <li><a href="{{path('user_tasks')}}">Mis tareas</a></li>
+            <li><a href="{{path('create_task')}}">Crear tarea</a></li>
+            <li class="right">{{app.user.name}} {{app.user.surname}}</li>
+            <li class="right"><a href="{{path('logout')}}">Logout</a></li>
+
+        {% else %}
+
+            <li><a href="{{path('login')}}">Login</a></li>
+            <li><a href="{{path('register')}}">Registrarse</a></li>
+
+        {% endif %}
+
     </ul>
 </header>
 <div class="clearfix"></div>
